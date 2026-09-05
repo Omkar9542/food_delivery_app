@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ restaurant.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+    <a href="{{ url_for('main.index') }}" class="btn btn-secondary mb-3">Back to Home</a>
+    <h2>{{ restaurant.name }} Menu</h2>
+    <p class="text-muted">Cuisine: {{ restaurant.cuisine }}</p>
+
+    <ul class="list-group">
+        {% for item in restaurant.menu_items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ item.name }}</strong> - ${{ "%.2f"|format(item.price) }}
+                </div>
+                <form action="{{ url_for('main.add_to_cart', item_id=item.id) }}" method="POST">
+                    <button type="submit" class="btn btn-sm btn-success">Add to Cart</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
